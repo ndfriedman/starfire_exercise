@@ -3,7 +3,7 @@ Agentic AI Workflow for Starfire
 
 Usage: streamlit run app.py
 
-versioning: Python 3.9.13
+versioning: Python 3.9.12
 
 Installation and set up
 1. Create a virtual environment: source .venv/bin/activate
@@ -14,15 +14,15 @@ Installation and set up
 3. Serapi.  Crete a token at https://serpapi.com/, and set it as an environmental variable.  export SERPAPI_API_KEY=XXXXX
 4. Install required packages:
 
-pip install smolagents
-pip install 'smolagents[transformers]
-Pip install openpyxl
-pip install markdownify requests
-Pip install matplotlib
-Pip install langchain
-pip install -U langchain-community
-pip install google-search-results
-pip install serpapi
+pip install smolagents\n
+pip install 'smolagents[transformers]\n
+Pip install openpyxl\n
+pip install markdownify requests\n
+Pip install matplotlib\n
+Pip install langchain\n
+pip install -U langchain-community\n
+pip install google-search-results\n
+pip install serpapi\n
 
 Notes: 
 This program will not work if you have a vpn on; disable it.  Both huggingface and serpapi will stop working if you exhaust your allocation of free tokens.
