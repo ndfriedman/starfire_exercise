@@ -9,7 +9,7 @@ sys.path.append("/Users/nfriedman/Desktop/starfire_exercise")
 import llm_query_utils
 
 
-
+#This runs the web search agent, implemented via serpapi
 def run_web_search_agent(web_search_query_text):
 	model = HfApiModel(
 		model_id="meta-llama/Llama-3.3-70B-Instruct",
@@ -68,11 +68,6 @@ def data_analysis_agent(
 		A natural‐language summary of the DataFrame’s columns,
 		basic statistics, and any notable patterns.
 	"""
-
-	print("_________EUROPE__________")
-	print("user_query", user_query)
-	print("data_pull_d", data_pull_dict)
-	print("_________NATO__________")
 
 	data_location = data_pull_dict["data_path"]
 
@@ -172,9 +167,6 @@ def plotting_agent(user_query: str,
 
 	if not isinstance(plotting_results, list):
 		plotting_results = list(str(plotting_results))
-
-	print("finished plotting")
-	print("plot res:", plotting_results)
 
 	return plotting_results
 
