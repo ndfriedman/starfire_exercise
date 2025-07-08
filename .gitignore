@@ -1,2 +1,3 @@
 .DS_Store
 tmp_llm_workspace
+__pycache__
