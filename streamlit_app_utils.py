@@ -3,6 +3,7 @@
 import streamlit as st
 from PIL import Image
 
+#creates a vertical line element in markdown
 def vertical_line_element():
 	return """<div style="
 	    display: flex;
@@ -31,6 +32,7 @@ def long_vertical_line_element():
     </div>
     """
 
+#renders the image carousel with plot data the appears at the conclusion of the pipeline
 def render_carousel(streamlitWriteColumn):
 	# 1. Initialize the index exactly once
 	if "idx" not in st.session_state:
