@@ -6,6 +6,7 @@ import prompt_reference_strs
 import re
 import ast
 
+#query the llm text completion endpoint with a prompt
 def query_llm(prompt):
 
 	client = InferenceClient(
