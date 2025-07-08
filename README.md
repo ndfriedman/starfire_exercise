@@ -14,8 +14,8 @@ Installation and set up
 3. Serapi.  Crete a token at https://serpapi.com/, and set it as an environmental variable.  export SERPAPI_API_KEY=XXXXX
 4. Install required packages:
 
-pip install smolagents\n
-pip install 'smolagents[transformers]\n
+pip install smolagents<br>
+pip install 'smolagents[transformers]<br>
 Pip install openpyxl\n
 pip install markdownify requests\n
 Pip install matplotlib\n
