@@ -1,11 +1,11 @@
 # starfire_exercise
 Agentic AI Workflow for Starfire
 
-Usage: streamlit run app.py
+**Usage**: streamlit run app.py
 
-versioning: Python 3.9.12
+**Versioning**: Python 3.9.12
 
-Installation and set up
+**Installation and set up**
 1. Create a virtual environment: source .venv/bin/activate
 2. Huggingface:
  i. huggingface token: https://huggingface.co/settings/tokens
@@ -16,13 +16,13 @@ Installation and set up
 
 pip install smolagents<br>
 pip install 'smolagents[transformers]<br>
-Pip install openpyxl\n
-pip install markdownify requests\n
-Pip install matplotlib\n
-Pip install langchain\n
-pip install -U langchain-community\n
-pip install google-search-results\n
-pip install serpapi\n
+Pip install openpyxl<br>
+pip install markdownify requests<br>
+Pip install matplotlib<br>
+Pip install langchain<br>
+pip install -U langchain-community<br>
+pip install google-search-results<br>
+pip install serpapi<br>
 
-Notes: 
+**Notes**: 
 This program will not work if you have a vpn on; disable it.  Both huggingface and serpapi will stop working if you exhaust your allocation of free tokens.
