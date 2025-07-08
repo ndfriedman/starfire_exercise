@@ -1,9 +1,6 @@
 #written by Noah Friedman
 #code that runs LLM prompts, retries them, and ensures they work
 
-#executes an agent with retry if it fails
-#this is a recursive function
-
 import llm_query_utils
 import data_pull_agent
 import data_analysis_agent
@@ -46,21 +43,20 @@ def execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current
 		print("this is the data pull dict", data_pull_dict)
 
 		#Checks 
-		#if not os.path.exists(str(data_pull_dict["data_path"])):
-		#	print("data_pull_query failed due to non_existent data")
-		#	return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
+		if not os.path.exists(str(data_pull_dict["data_path"])):
+			print("data_pull_query failed due to non_existent data")
+			return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
 		print("Passed data directory exists check")
 
-		#if not ensure_non_empty_csv_is_present(str(data_pull_dict["data_path"])):
-		#	print("data_pull_query failed due to non_existent csvs")
-		#	return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
+		if not ensure_non_empty_csv_is_present(str(data_pull_dict["data_path"])):
+			print("data_pull_query failed due to non_existent csvs")
+			return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
 		print("Passed non empty csv check")
 
 		print("Data Sucessfully Pulled")
 		return data_pull_dict
 
 	except Exception as e:
-		#raise(e)
 
 		print("data_pull_query failed due to exception: ", e)
 		if n_retries_current < n_retries_max:
@@ -86,6 +82,7 @@ def execute_analysis_agent_with_qc_and_retry(user_analysis_request, data_pull_di
 			return execute_analysis_agent_with_qc_and_retry(user_analysis_request, data_pull_dict, n_retries_current + 1, 5)
 
 
+#executes the full analysis pipeline by running agents in sequence with retry
 def execute_full_analysis_pipeline(full_user_task, streamlitWriteColumn, breakupQueries=False):
 
 	subtasks = []
@@ -120,6 +117,5 @@ def execute_full_analysis_pipeline(full_user_task, streamlitWriteColumn, breakup
 		finalAnswer = llm_query_utils.integrate_answers_into_final_answer(full_user_task, st.session_state.analysis_results)
 	streamlitWriteColumn.write("FINAL ANSWER: " + finalAnswer)
 	
-	return 0
 	
 
