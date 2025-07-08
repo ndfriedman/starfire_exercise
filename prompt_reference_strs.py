@@ -1,5 +1,5 @@
 #written by Noah Friedman
-
+#Returns specific reference data to the llm (e.g. database config)
 
 jsonObj = {"medicare_data_api_links": {
     # Medicare Part D Prescribers — by Geography and Drug
