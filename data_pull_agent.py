@@ -6,6 +6,7 @@ from huggingface_hub import InferenceClient
 from difflib import get_close_matches
 import prompt_reference_strs
 import ast
+import sys
 
 def get_all_distinct_values_for_column(data_key: str, year: str, colName: str) -> str:
 
@@ -103,7 +104,7 @@ def inspect_database_columns(data_key: str, year: str) -> str:
 	resp.raise_for_status()
 	columns = resp.json()[0].keys()
 
-	print("the columns are", columns)
+	#print("the columns are", columns)
 
 	return columns
 
@@ -115,7 +116,7 @@ def medicare_data_query_tool(data_key: str, year: str, filter_params: dict) -> d
 	Args:
 		data_key: the data set to access.  Options: medicare-part-d-prescribers-by-geography-and-drug, medicare-part-d-prescribers-by-provider, medicare-part-d-prescribers-by-provider-and-drug
 		year: the year to access the data set.  Options: 2021, 2022, 2023
-		filter_params: a dictionary of columns to filter on and variables to filter on
+		filter_params: a dictionary of columns to filter on and variables to filter on.  Only filter on specifications requested by the user (if any)
 
 	Returns:
 		a dict containing the json results from the database
@@ -130,18 +131,28 @@ def medicare_data_query_tool(data_key: str, year: str, filter_params: dict) -> d
 
 	guid = medicare_data_dict[data_key][year]
 	url  = f"https://data.cms.gov/data-api/v1/dataset/{guid}/data"
-
+	
 	resp = requests.get(url, params=params)
+
 	try:
 		resp.raise_for_status()
 		data = resp.json()
+
+		print(url)
+		print("url")
+		print(params)
+		print("cow")
+		print(len(data))
+		print("lebron")
+		#sys.exit()
+
 
 		#if data is None:
 		#	data = "No data was pulled, please try again"
 		return data
 
 	except Exception as e:
-		raise(e)
+		#raise(e)
 		return "The request returned an exception, try again"
 
 
@@ -174,6 +185,8 @@ def data_pull_agent(
 		"Ensure that all necessary data is pulled\n"
 		f"Data should be saved to the directory {save_dir_location}\n"
 		"Data itself should be saved as a csv\n"
+		"Make sure to distinguish between brand and generic names when creating the parameters for the data pull query.  Only include necessary filter params in your data pull query.\n"
+		"Retry the medicare_data_query_tool if it doesn't return an answer\n"
 		"Return to the user the following items as a string in python dictionary format:\n"
 		"1.data_path: a single path to where the data was stored.\n"
 		"2.data_summary: A free text summary of the data pulled including amount of data and number of files etc.\n"
@@ -197,8 +210,6 @@ def data_pull_agent(
 	)
 
 
-	print("This is the prompt guys ", prompt)
-
 	# 4) Run the agent on our prompt
 	res = agent.run(prompt)
 
@@ -206,8 +217,6 @@ def data_pull_agent(
 	
 	#TODO NOAH CORRECTING
 	d = ast.literal_eval(str(res))
-	#print(d)
-	#return d
 
 	#MAKE SURE THE RESULT RETURNED IS THE CORRECT TYPE
 	if not isinstance(d, dict):

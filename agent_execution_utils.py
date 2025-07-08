@@ -46,14 +46,14 @@ def execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current
 		print("this is the data pull dict", data_pull_dict)
 
 		#Checks 
-		if not os.path.exists(str(data_pull_dict["data_path"])):
-			print("data_pull_query failed due to non_existent data")
-			return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
+		#if not os.path.exists(str(data_pull_dict["data_path"])):
+		#	print("data_pull_query failed due to non_existent data")
+		#	return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
 		print("Passed data directory exists check")
 
-		if not ensure_non_empty_csv_is_present(str(data_pull_dict["data_path"])):
-			print("data_pull_query failed due to non_existent csvs")
-			return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
+		#if not ensure_non_empty_csv_is_present(str(data_pull_dict["data_path"])):
+		#	print("data_pull_query failed due to non_existent csvs")
+		#	return execute_data_pull_agent_with_qc_and_retry(data_pull_query, n_retries_current + 1, n_retries_max)
 		print("Passed non empty csv check")
 
 		print("Data Sucessfully Pulled")

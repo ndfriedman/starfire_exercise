@@ -19,20 +19,28 @@ import ast
 import requests
 import prompt_reference_strs
 
-data_key = "medicare-part-d-prescribers-by-geography-and-drug"
-year = "2023"
-medicare_data_dict = prompt_reference_strs.get_val("medicare_data_api_links")
-guid = medicare_data_dict[data_key][year]
-
-resp = requests.get(f"https://data.cms.gov/data-api/v1/dataset/{guid}/data", params={"size":1})
-resp.raise_for_status()
-columns = resp.json()[0].keys()
-
-print(columns)
 
 #x = llm_query_utils.query_llm("what are the 5 largest metro areas in korea?")
 #print(x)
 
 
+#url = "https://data.cms.gov/data-api/v1/dataset/c8ea3f8e-3a09-4fea-86f2-8902fb4b0920/data"
+
+#url = "https://data.cms.gov/data-api/v1/dataset/7dda2a9d-034a-446a-b4b3-e1254e0127b2/data"
+
+url = "https://data.cms.gov/data-api/v1/dataset/7dda2a9d-034a-446a-b4b3-e1254e0127b2/data"
+
+#params = {'filter[Gnrc_Name]': 'rosuvastatin', 'filter[Prscrbr_Geo_Lvl]': 'State'}
+#params = {'filter[Brnd_Name]': 'Zoloft'}
+params = {'filter[drug_name]': 'rosuvastatin', 'filter[geography]': 'state'}
 
 
+resp = requests.get(url, params=params)
+try:
+	resp.raise_for_status()
+	data = resp.json()
+
+	print(len(data))
+
+except Exception as e:
+	print(e)
