@@ -7,6 +7,8 @@ import time
 import os
 import shutil
 
+#evaluates the accuracy of the data pull agent
+#currently accuracy is defined as pulling non-empty csvs
 def evaluate_data_pull_agent(full_user_task):
 
 	start = time.perf_counter()
@@ -42,6 +44,7 @@ def evaluate_data_pull_agent(full_user_task):
 
 	return is_correct, functionTime
 
+#evaluates the accuracy of the analysis pipeline
 def evaluate_analysis_pipeline(data_pull_dict, full_user_task, correct_answer):
 
 	start = time.perf_counter()
@@ -58,11 +61,14 @@ def evaluate_analysis_pipeline(data_pull_dict, full_user_task, correct_answer):
 
 	end   = time.perf_counter()
 
+#Evaluates whether data integration was successful
 def evaluate_data_integration(userQuery, answers, correct_answer):
 	candidate_answer = llm_query_utils.integrate_answers_into_final_answer(userQuery, answers)
 	isCorrectAnswer = llm_query_utils.evaluate_whether_an_answer_is_correct(candidate_answer, correct_answer)
 	return isCorrectAnswer
 
+
+#Currently we comment and uncomment for accuracy evaluation; TODO put into main and accept parameters
 
 eval_data_integration = False
 if eval_data_integration:
@@ -97,7 +103,7 @@ if eval_data_pull_agent:
 
 	for i in range(10):
 
-		full_user_task = "Pull Lamotrigine perscriptions for California from 2022"
+		full_user_task = "Pull all epipen perscriptions in west coast states"
 		answer, t = evaluate_data_pull_agent(full_user_task)
 		
 		answers.append(answer)
@@ -116,7 +122,7 @@ if evaluate_analysis_pipeline:
 
 	for i in range(3):
 
-		full_user_task = "Pull Lamotrigine perscriptions for California from 2022"
+		full_user_task = "Which is more common"
 		data_pull_dict = ""
 		correct_answer = ""
 		answer, t = evaluate_analysis_pipeline(data_pull_dict, full_user_task, correct_answer)
